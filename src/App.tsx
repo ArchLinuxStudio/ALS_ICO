@@ -44,17 +44,17 @@ import {
   useColorModeValue,
   chakra,
   SimpleGrid,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from '@/ColorModeSwitcher';
-import { Logo } from '@/Logo';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import Web3 from 'web3';
-import { BlockHeader, Block } from 'web3-eth'; // ex. package types
-import ALSToken from '@/blockchain/build/contracts/ALSToken.json';
-import ALSTokenSale from '@/blockchain/build/contracts/ALSTokenSale.json';
-import { FaTelegram, FaGithub } from 'react-icons/fa';
-import { SiMatrix } from 'react-icons/si';
-import _ from 'lodash';
+} from "@chakra-ui/react";
+import { ColorModeSwitcher } from "@/ColorModeSwitcher";
+import { Logo } from "@/Logo";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Web3 from "web3";
+import { BlockHeader, Block } from "web3-eth"; // ex. package types
+import ALSToken from "@/blockchain/build/contracts/ALSToken.json";
+import ALSTokenSale from "@/blockchain/build/contracts/ALSTokenSale.json";
+import { FaTelegram, FaGithub } from "react-icons/fa";
+import { SiMatrix } from "react-icons/si";
+import _ from "lodash";
 
 declare let window: any;
 
@@ -63,16 +63,16 @@ export const App = () => {
 
   const { colorMode } = useColorMode();
 
-  const isDark = colorMode === 'dark';
-  const [isNotSmallerScreen] = useMediaQuery('(min-width:600px)');
+  const isDark = colorMode === "dark";
+  const [isNotSmallerScreen] = useMediaQuery("(min-width:600px)");
 
-  const [userAccount, setUserAccount] = useState('');
+  const [userAccount, setUserAccount] = useState("");
 
   const [tokenPrice, setTokenPrice] = useState(0);
 
-  const [tokenContractAddress, setTokenContractAddress] = useState('0x0');
+  const [tokenContractAddress, setTokenContractAddress] = useState("0x0");
   const [tokenSaleContractAddress, setTokenSaleContractAddress] =
-    useState('0x0');
+    useState("0x0");
 
   const [tokensSold, setTokensSold] = useState(0);
 
@@ -115,12 +115,12 @@ export const App = () => {
     const initProject = async () => {
       if (window.ethereum) {
         // connect metamask
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        await window.ethereum.request({ method: "eth_requestAccounts" });
         // create web3
         let web3 = new Web3(window.ethereum);
         let web3Provider = web3.currentProvider;
         //can not use import for @truffle/contract in typescript now
-        const TruffleContract = require('@truffle/contract');
+        const TruffleContract = require("@truffle/contract");
         let ALSTokenABS = TruffleContract(ALSToken);
         let ALSTokenSaleABS = TruffleContract(ALSTokenSale);
 
@@ -139,8 +139,8 @@ export const App = () => {
       } else {
         toast({
           title:
-            '⚠️ Please install an Ethereum-compatible browser or extension like MetaMask to use this DApp!',
-          status: 'warning',
+            "⚠️ Please install an Ethereum-compatible browser or extension like MetaMask to use this DApp!",
+          status: "warning",
           duration: 7000,
           isClosable: true,
         });
@@ -152,9 +152,9 @@ export const App = () => {
 
   const buyTokens = async () => {
     toast({
-      title: 'Please wait...',
-      description: 'The network needs time to complete your transaction.',
-      status: 'info',
+      title: "Please wait...",
+      description: "The network needs time to complete your transaction.",
+      status: "info",
       duration: 5000,
       isClosable: true,
     });
@@ -166,9 +166,9 @@ export const App = () => {
     });
 
     toast({
-      title: '🎉Purchase successfully!',
+      title: "🎉Purchase successfully!",
       description: "We've send tokens for you.",
-      status: 'success',
+      status: "success",
       duration: 5000,
       isClosable: true,
     });
@@ -185,7 +185,7 @@ export const App = () => {
   // Listen for events emitted from the contract
   const listenForEvents = async () => {
     if (!_.isEmpty(tokenSaleInstance)) {
-      console.log('waiting./..');
+      console.log("waiting./..");
 
       await tokenSaleInstance.Sell({ filter: {}, fromBlock: 0 }, async () => {
         await fetchData();
@@ -205,7 +205,7 @@ export const App = () => {
           <IconButton
             icon={<SiMatrix />}
             size="sm"
-            aria-label={''}
+            aria-label={""}
           ></IconButton>
         </Link>
         <Link href="https://t.me/FSF_Ministry_of_Truth" isExternal>
@@ -213,7 +213,7 @@ export const App = () => {
             ml={2}
             size="sm"
             icon={<FaTelegram />}
-            aria-label={''}
+            aria-label={""}
           ></IconButton>
         </Link>
         <Link href="https://github.com/ArchLinuxStudio" isExternal>
@@ -221,7 +221,7 @@ export const App = () => {
             ml={2}
             size="sm"
             icon={<FaGithub />}
-            aria-label={''}
+            aria-label={""}
           ></IconButton>
         </Link>
         <ColorModeSwitcher />
@@ -237,30 +237,30 @@ export const App = () => {
           alignSelf="flex-end"
         />
         <Flex
-          direction={isNotSmallerScreen ? 'row' : 'column'}
+          direction={isNotSmallerScreen ? "row" : "column"}
           // spacing="200px"
-          p={isNotSmallerScreen ? '32' : '0'}
+          p={isNotSmallerScreen ? "32" : "0"}
           alignSelf="flex-start"
         >
           <Box
-            mt={isNotSmallerScreen ? '0' : 16}
+            mt={isNotSmallerScreen ? "0" : 16}
             // align="flex-start"
           >
             <Text
-              fontSize={isNotSmallerScreen ? '5xl' : '3xl'}
+              fontSize={isNotSmallerScreen ? "5xl" : "3xl"}
               fontWeight="semibold"
             >
               👋Hi~ Prepare for
             </Text>
             <Text
-              fontSize={isNotSmallerScreen ? '7xl' : '4xl'}
+              fontSize={isNotSmallerScreen ? "7xl" : "4xl"}
               fontWeight="bold"
               bgGradient="linear(to-r, cyan.400, blue.500, purple.600)"
               bgClip="text"
             >
               ALS TOKEN SALE!
             </Text>
-            <Text color={isDark ? 'gray.200' : 'gray.500'}>
+            <Text color={isDark ? "gray.200" : "gray.500"}>
               ALS is a ERC20 token, used for creating and issuing smart
               contracts on the Ethereum blockchain. ALS TOKEN is used to promote
               the development of free software, as well as to ensure free access
@@ -270,15 +270,15 @@ export const App = () => {
               mt={8}
               colorScheme="blue"
               onClick={() =>
-                window.open('https://github.com/ArchLinuxStudio/ALS_ICO')
+                window.open("https://github.com/ArchLinuxStudio/ALS_ICO")
               }
             >
               Source Code
             </Button>
           </Box>
           <Logo
-            mt={isNotSmallerScreen ? '0' : '12'}
-            mb={isNotSmallerScreen ? '0' : '12'}
+            mt={isNotSmallerScreen ? "0" : "12"}
+            mb={isNotSmallerScreen ? "0" : "12"}
             boxSize="250px"
             pointerEvents="none"
             alignSelf="center"
@@ -292,13 +292,13 @@ export const App = () => {
       {/* MID */}
       <Stack w="80%">
         <Flex
-          direction={isNotSmallerScreen ? 'row' : 'column'}
-          p={isNotSmallerScreen ? '32' : '0'}
+          direction={isNotSmallerScreen ? "row" : "column"}
+          p={isNotSmallerScreen ? "32" : "0"}
           alignSelf="flex-start"
           paddingTop={0}
           paddingBottom={0}
         >
-          <Box mt={isNotSmallerScreen ? '0' : 16}>
+          <Box mt={isNotSmallerScreen ? "0" : 16}>
             <Heading fontWeight="extrabold" color="cyan.500" size="4xl">
               5+
             </Heading>
@@ -315,7 +315,7 @@ export const App = () => {
               {tokensSold}/{saleContractBalance + tokensSold} tokens sold
             </Text>
             <Progress
-              colorScheme={'pink'}
+              colorScheme={"pink"}
               hasStripe
               value={(tokensSold / (saleContractBalance + tokensSold)) * 100}
             />
@@ -323,18 +323,18 @@ export const App = () => {
 
           <Stack
             spacing={4}
-            w={'full'}
-            maxW={'md'}
-            rounded={'xl'}
-            boxShadow={'lg'}
+            w={"full"}
+            maxW={"md"}
+            rounded={"xl"}
+            boxShadow={"lg"}
             p={6}
             my={12}
-            ml={isNotSmallerScreen ? '30' : '0'}
+            ml={isNotSmallerScreen ? "30" : "0"}
           >
-            <Heading lineHeight={1.1} fontSize={{ base: '1xl', md: '2xl' }}>
+            <Heading lineHeight={1.1} fontSize={{ base: "1xl", md: "2xl" }}>
               You currently have {userAccountTokenBalance} ALS
             </Heading>
-            <Text fontSize={{ base: 'sm', sm: 'md' }}>Buy some more?</Text>
+            <Text fontSize={{ base: "sm", sm: "md" }}>Buy some more?</Text>
             <FormControl>
               <NumberInput
                 defaultValue={buyNumber}
@@ -360,23 +360,23 @@ export const App = () => {
 
       {/* STATISTICS */}
       <Stack>
-        <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+        <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
           <chakra.h1
-            textAlign={'center'}
-            fontSize={'4xl'}
+            textAlign={"center"}
+            fontSize={"4xl"}
             py={10}
-            fontWeight={'bold'}
+            fontWeight={"bold"}
           >
             Transparency, so trust🏯
           </chakra.h1>
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
             <Stat
               p="2"
-              rounded={'lg'}
+              rounded={"lg"}
               px={{ base: 4, md: 8 }}
-              py={'5'}
-              shadow={'xl'}
-              border={'1px solid'}
+              py={"5"}
+              shadow={"xl"}
+              border={"1px solid"}
             >
               <StatLabel>TOKEN PRICE:</StatLabel>
               <StatNumber>{tokenPrice} ETH</StatNumber>
@@ -385,11 +385,11 @@ export const App = () => {
 
             <Stat
               p="2"
-              rounded={'lg'}
+              rounded={"lg"}
               px={{ base: 4, md: 8 }}
-              py={'5'}
-              shadow={'xl'}
-              border={'1px solid'}
+              py={"5"}
+              shadow={"xl"}
+              border={"1px solid"}
             >
               <StatGroup p="2">
                 <Stat>
@@ -413,42 +413,42 @@ export const App = () => {
 
             <Stat
               p="2"
-              rounded={'lg'}
+              rounded={"lg"}
               px={{ base: 4, md: 8 }}
-              py={'5'}
-              shadow={'xl'}
-              border={'1px solid'}
+              py={"5"}
+              shadow={"xl"}
+              border={"1px solid"}
             >
               <StatLabel>Token contract address:</StatLabel>
-              <StatNumber fontSize={'medium'}>
+              <StatNumber fontSize={"medium"}>
                 {tokenContractAddress}
               </StatNumber>
             </Stat>
 
             <Stat
               p="2"
-              rounded={'lg'}
+              rounded={"lg"}
               px={{ base: 4, md: 8 }}
-              py={'5'}
-              shadow={'xl'}
-              border={'1px solid'}
+              py={"5"}
+              shadow={"xl"}
+              border={"1px solid"}
             >
               <StatLabel>Token sale contract address:</StatLabel>
-              <StatNumber fontSize={'medium'}>
+              <StatNumber fontSize={"medium"}>
                 {tokenSaleContractAddress}
               </StatNumber>
             </Stat>
 
             <Stat
               p="2"
-              rounded={'lg'}
+              rounded={"lg"}
               px={{ base: 4, md: 8 }}
-              py={'5'}
-              shadow={'xl'}
-              border={'1px solid'}
+              py={"5"}
+              shadow={"xl"}
+              border={"1px solid"}
             >
               <StatLabel>Your account address:</StatLabel>
-              <StatNumber fontSize={'medium'}>{userAccount}</StatNumber>
+              <StatNumber fontSize={"medium"}>{userAccount}</StatNumber>
             </Stat>
           </SimpleGrid>
         </Box>
@@ -460,7 +460,7 @@ export const App = () => {
           <Alert
             status="info"
             marginTop={100}
-            width={isNotSmallerScreen ? '70%' : '100%'}
+            width={isNotSmallerScreen ? "70%" : "100%"}
           >
             <AlertIcon />
             NOTICE: This token sale uses in Rinkeby Test Network with fake

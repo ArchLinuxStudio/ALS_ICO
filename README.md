@@ -1,5 +1,12 @@
 # ALS_ICO
 
+This project teaches how to issue ERC-20 tokens based on the Ethereum Virtual Machine.
+
+If you have Ethereum in the rinkeby testnet, you can participate in the test.
+
+This project borrows a lot from this youtube video: [Code Your Own Cryptocurrency on Ethereum (Full)
+](https://www.youtube.com/watch?v=XdKv5uwEk5A&list=PLS5SEs8ZftgWFuKg2wbm_0GLV0Tiy1R-n).
+
 ## Deploy to rinkeby test network
 
 1. Run geth node
