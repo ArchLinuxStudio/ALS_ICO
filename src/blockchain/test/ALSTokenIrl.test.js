@@ -8,7 +8,7 @@ const { expect } = require("chai");
 contract("ALSTokenIrl", (accounts) => {
   const _name = "ALS Token";
   const _symbol = "ALS";
-  const _decimals = "18";
+  const _decimals = new BN(18);
 
   beforeEach(async () => {
     // compare with deployed(), new() create new instance each time
