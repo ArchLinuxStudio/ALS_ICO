@@ -55,3 +55,4 @@ dkms.conf
 /node_modules
 /build
 /src/blockchain/build
+yarn-error.log
