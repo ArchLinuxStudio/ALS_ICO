@@ -1,6 +1,6 @@
-const ALSToken = artifacts.require('ALSToken');
-const ALSTokenSale = artifacts.require('ALSTokenSale');
-const common = require('../const.js');
+const ALSToken = artifacts.require("ALSToken");
+const ALSTokenSale = artifacts.require("ALSTokenSale");
+const common = require("../const.js");
 
 module.exports = async (deployer) => {
   await deployer.deploy(ALSToken, common.TOTAL_SUPPLY);

@@ -2,9 +2,14 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 // GSN remove: https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v4.0.0
+// https://ethereum-blockchain-developer.com/060-tokenization/06-add-crowdsale/
 // https://opengsn.org/
+// https://github.com/OpenZeppelin/openzeppelin-contracts/pull/2521/files
+// https://forum.openzeppelin.com/t/where-are-crowdsale-contracts-in-openzeppelin-contracts-3-0/2348
 
-// import "../GSN/Context.sol";
+// https://forum.openzeppelin.com/t/where-is-erc20mintable-sol-in-openzeppelin-contracts-3-0/2283
+
+// import "../GSN/Context.sol"; OK
 // import "../token/ERC20/IERC20.sol";  OK
 // import "../math/SafeMath.sol";  OK
 // import "../token/ERC20/SafeERC20.sol"; OK
@@ -245,6 +250,7 @@ contract Crowdsale is BaseRelayRecipient, ReentrancyGuard {
         _wallet.transfer(msg.value);
     }
 
+    // Need to rewrite this funcion when used.
     function versionRecipient()
         external
         view

@@ -1,28 +1,28 @@
-const ALSTokenSale = artifacts.require('ALSTokenSale');
-const ALSToken = artifacts.require('ALSToken');
-const mlog = require('mocha-logger');
-const common = require('../const.js');
+const ALSTokenSale = artifacts.require("ALSTokenSale");
+const ALSToken = artifacts.require("ALSToken");
+const mlog = require("mocha-logger");
+const common = require("../const.js");
 
-contract('ALSTokenSale', (accounts) => {
+contract("ALSTokenSale", (accounts) => {
   let ALSTokenSaleInstance;
   let ALSTokenInstance;
   let admin = accounts[0];
   let buyer = accounts[1];
 
-  it('initializes the contract with the correct values', async () => {
+  it("initializes the contract with the correct values", async () => {
     ALSTokenSaleInstance = await ALSTokenSale.deployed();
 
     let address = ALSTokenSaleInstance.address;
-    assert.notEqual(address, 0x0, 'has contract address');
+    assert.notEqual(address, 0x0, "has contract address");
 
     let tokenContractaddress = await ALSTokenSaleInstance.tokenContract();
-    assert.notEqual(tokenContractaddress, 0x0, 'has token contract address');
+    assert.notEqual(tokenContractaddress, 0x0, "has token contract address");
 
     let price = await ALSTokenSaleInstance.tokenPrice();
-    assert.equal(price, common.ALS_TOKEN_PRICE, 'token price is correct');
+    assert.equal(price, common.ALS_TOKEN_PRICE, "token price is correct");
   });
 
-  it('facilitates token buying', async () => {
+  it("facilitates token buying", async () => {
     ALSTokenInstance = await ALSToken.deployed();
     ALSTokenSaleInstance = await ALSTokenSale.deployed();
     // give ALS_ICO_SUPPLY_PERCENT token to sale contract
@@ -39,17 +39,17 @@ contract('ALSTokenSale', (accounts) => {
       value: numberOfTokens * common.ALS_TOKEN_PRICE,
     });
 
-    assert.equal(receipt.logs.length, 1, 'triggers one event');
-    assert.equal(receipt.logs[0].event, 'Sell', 'should be Sell event');
+    assert.equal(receipt.logs.length, 1, "triggers one event");
+    assert.equal(receipt.logs[0].event, "Sell", "should be Sell event");
     assert.equal(
       receipt.logs[0].args._buyer,
       buyer,
-      'logs the account that purchased the tokens'
+      "logs the account that purchased the tokens"
     );
     assert.equal(
       receipt.logs[0].args._amount,
       numberOfTokens,
-      'logs the number of tokens purchased'
+      "logs the number of tokens purchased"
     );
 
     let amount = await ALSTokenSaleInstance.tokensSold();
@@ -57,7 +57,7 @@ contract('ALSTokenSale', (accounts) => {
     assert.equal(
       amount.toNumber(),
       numberOfTokens,
-      'increments the number of tokens sold'
+      "increments the number of tokens sold"
     );
 
     let buyerBalance = await ALSTokenInstance.balanceOf(buyer);
@@ -78,10 +78,10 @@ contract('ALSTokenSale', (accounts) => {
       });
       assert(false);
     } catch (error) {
-      mlog.log('********error messages: \n' + error.message);
+      mlog.log("********error messages: \n" + error.message);
       assert(
-        error.message.indexOf('revert') >= 0,
-        'msg.value must equal number of tokens in wei'
+        error.message.indexOf("revert") >= 0,
+        "msg.value must equal number of tokens in wei"
       );
     }
 
@@ -96,15 +96,15 @@ contract('ALSTokenSale', (accounts) => {
       );
       assert(false);
     } catch (error) {
-      mlog.log('********error messages: \n' + error.message);
+      mlog.log("********error messages: \n" + error.message);
       assert(
-        error.message.indexOf('revert') >= 0,
-        'cannot purchase more tokens than available'
+        error.message.indexOf("revert") >= 0,
+        "cannot purchase more tokens than available"
       );
     }
   });
 
-  it('ends token sale', async () => {
+  it("ends token sale", async () => {
     ALSTokenInstance = await ALSToken.deployed();
     ALSTokenSaleInstance = await ALSTokenSale.deployed();
     let numberOfTokens = 10;
@@ -113,8 +113,8 @@ contract('ALSTokenSale', (accounts) => {
       await ALSTokenSaleInstance.endSale({ from: buyer });
       assert(false);
     } catch (error) {
-      mlog.log('********error messages: \n' + error.message);
-      assert(error.message.indexOf('revert') >= 0, 'must be admin to end sale');
+      mlog.log("********error messages: \n" + error.message);
+      assert(error.message.indexOf("revert") >= 0, "must be admin to end sale");
     }
 
     let receipt = await ALSTokenSaleInstance.endSale({ from: admin });
@@ -122,7 +122,7 @@ contract('ALSTokenSale', (accounts) => {
     assert.equal(
       balanceOfAdmin.toNumber(),
       common.TOTAL_SUPPLY - numberOfTokens,
-      'returns all unsold tokens to admin'
+      "returns all unsold tokens to admin"
     );
 
     // Check that the contract has no balance
